@@ -1,4 +1,34 @@
-app:
+api:
   build: .
+  volumes:
+    - .:/usr/src/app
   ports:
-    - 3335:8080
+    - "8080:8080"
+
+cron:
+  image: webwurst/go-cron
+  command: "go-cron '*/10 * * * * *' /bin/sh -c 'curl -sS $API_PORT_8080_TCP_ADDR:$API_PORT_8080_TCP_PORT | nc $LOGSTASH_PORT_7001_TCP_ADDR $LOGSTASH_PORT_7001_TCP_PORT'"
+  links:
+    - api
+    - logstash
+
+elasticsearch:
+  image: webwurst/elasticsearch
+  ports:
+    - "9200"
+    - "9300"
+
+logstash:
+  image: webwurst/logstash
+  ports:
+    - "25826:25826/udp"
+    - "7001:7001"
+  links:
+    - elasticsearch
+
+kibana:
+  image: webwurst/kibana
+  ports:
+    - "5601:5601"
+  links:
+    - elasticsearch

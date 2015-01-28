@@ -14,16 +14,16 @@ class ParkingApi
   CACHE_MAX_AGE = 60
   @base_url = 'http://www5.stadt-muenster.de/parkhaeuser/'
   @geojson = JSON.parse(open(File.join(File.dirname(File.expand_path(__FILE__)), 'parking_spaces.json')).read)
+  @geojson["features"].map! { |e| e.delete("geometry"); e }
   @cache = {
     fetch_time: 0
   }
 
   def self.get_parking_spaces
-    if Time.now.to_i - @cache[:fetch_time] < CACHE_MAX_AGE
-      @cache.to_json
-    else
-      self.build_cache().to_json
+    unless Time.now.to_i - @cache[:fetch_time] < CACHE_MAX_AGE
+      self.build_cache()
     end
+    @cache["features"].map {|f| f.to_json}.join("\n")
   end
 
   def self.build_cache
