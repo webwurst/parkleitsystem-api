@@ -2,17 +2,9 @@
 
 Ein Wrapper für das Parkleitsystem des Tiefbauamts Münster (http://www5.stadt-muenster.de/parkhaeuser/). Die API lässt sich abrufen auf http://parkleit-api.codeformuenster.org/
 
-### Docker
-- `docker build -t parking_api .`
-- `docker run -d -p 8080:8080 parking_api`
-
-### Lokal ausführen
-- Benötigt wird Ruby 2.1.5
-- `bundle install`
-- ausführen mit `unicorn -Ilib`
-
-### New Relic Monitoring
-- newrelic.yml in `config` anlegen (wird bei new relic erklärt)
+### fig
+- `fig up`
+- `xdg-open http://localhost:5601`
 
 
 Wer schon einmal ein bisschen auf muenster.de herumgesurft hat, ist sicherlich schon auf das [Parkleitsystem](http://www5.stadt-muenster.de/parkhaeuser/) des Tiefbauamtes Münster gestoßen. Das System erlaubt es seinen Nutzern die aktuell freien Parkplätze für insgesamt 16 Parkplätze, Parkhäuser und Tiefgaragen in Münsters Innenstadt abzurufen.

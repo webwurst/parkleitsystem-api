@@ -1,7 +1,8 @@
 api:
-  build: .
-  volumes:
-    - .:/usr/src/app
+  image: webwurst/parkleitsystem-api
+  #build: .
+  #volumes:
+  #  - .:/usr/src/app
   ports:
     - "8080:8080"
 
